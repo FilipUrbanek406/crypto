@@ -33,6 +33,4 @@ public class CryptoService {
         cryptos.sort(Comparator.comparing(CryptoDTO::getQuantity));
         return cryptos;
     }
-
-    // https://chatgpt.com/share/67d881f6-2680-8005-99ea-ab2adad009a0
 }
