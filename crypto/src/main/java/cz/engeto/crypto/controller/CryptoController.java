@@ -33,4 +33,5 @@ public class CryptoController {
         List<CryptoDTO> cryptos = cryptoService.getAllCryptos();
         return new ResponseEntity(HttpStatus.OK);
     }
+
 }
