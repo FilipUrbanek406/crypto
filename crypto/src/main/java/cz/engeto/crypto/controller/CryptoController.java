@@ -31,7 +31,7 @@ public class CryptoController {
     @GetMapping("/cryptos")
     public ResponseEntity getAllCryptos() {
         List<CryptoDTO> cryptos = cryptoService.getAllCryptos();
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(cryptos, HttpStatus.OK);
     }
 
 }

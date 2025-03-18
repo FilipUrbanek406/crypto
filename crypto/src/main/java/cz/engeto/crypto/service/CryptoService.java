@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public class CryptoService {
+
     private List<CryptoDTO> cryptos = new ArrayList<>();
 
     public void addCrypto(CryptoDTO cryptoDTO) {
