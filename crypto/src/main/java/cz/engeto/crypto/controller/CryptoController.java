@@ -5,10 +5,7 @@ import cz.engeto.crypto.service.CryptoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,9 +26,23 @@ public class CryptoController {
     }
 
     @GetMapping("/cryptos")
-    public ResponseEntity getAllCryptos() {
-        List<CryptoDTO> cryptos = cryptoService.getAllCryptos();
+    public ResponseEntity getAllCryptos(@RequestParam(required = false) String sort) {
+        List<CryptoDTO> cryptos;
+        if ("price".equalsIgnoreCase(sort)) {
+            cryptos = cryptoService.sortCryptosByPrice();
+        } else if ("name".equalsIgnoreCase(sort)) {
+            cryptos = cryptoService.sortCryptosByName();
+        } else if ("quantity".equalsIgnoreCase(sort)) {
+            cryptos = cryptoService.sortCryptosByQuantity();
+        } else {
+            cryptos = cryptoService.getAllCryptos();
+        }
         return new ResponseEntity(cryptos, HttpStatus.OK);
     }
 
+    @GetMapping("/cryptos/{id}")
+    public ResponseEntity getCryptoById(@PathVariable Integer id) {
+        List<CryptoDTO> cryptos = cryptoService.getCryptoById(id);
+        return new ResponseEntity(cryptos, HttpStatus.OK);
+    }
 }

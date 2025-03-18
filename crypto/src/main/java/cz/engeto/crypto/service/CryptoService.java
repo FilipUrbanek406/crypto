@@ -17,7 +17,19 @@ public class CryptoService {
     }
 
     public List<CryptoDTO> getAllCryptos() {
+
         return cryptos;
+    }
+
+    //Další metoda, která není v zadání. Projít s Tomem, jestli existuje i jiné řešení.
+    public List<CryptoDTO> getCryptoById(Integer id) {
+        List<CryptoDTO> cryptoById = new ArrayList<>();
+        for (CryptoDTO crypto : cryptos) {
+            if (crypto.getId().equals(id)) {
+                cryptoById.add(crypto);
+            }
+        }
+        return cryptoById;
     }
 
     public List<CryptoDTO> sortCryptosByName() {
