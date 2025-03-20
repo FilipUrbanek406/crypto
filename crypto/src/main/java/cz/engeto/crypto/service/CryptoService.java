@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class CryptoService {
 
-    private List<CryptoDTO> cryptos = new ArrayList<>();
+    private final List<CryptoDTO> cryptos = new ArrayList<>();
 
     public void addCrypto(CryptoDTO cryptoDTO) {
         cryptos.add(cryptoDTO);
@@ -19,6 +19,15 @@ public class CryptoService {
     public List<CryptoDTO> getAllCryptos() {
 
         return cryptos;
+    }
+
+    public CryptoDTO getCryptoById(Integer id) {
+        for (CryptoDTO crypto : cryptos) {
+            if (crypto.getId().equals(id)) {
+                return crypto;
+            }
+        }
+        return null;
     }
 
     public List<CryptoDTO> sortCryptosByName() {
@@ -36,22 +45,11 @@ public class CryptoService {
         return cryptos;
     }
 
-    public List<CryptoDTO> getCryptoById(Integer id) {
-        List<CryptoDTO> cryptoById = new ArrayList<>();
+    public double getPortfolioValue() {
+        double portfolioValue = 0.0;
         for (CryptoDTO crypto : cryptos) {
-            if (crypto.getId().equals(id)) {
-                cryptoById.add(crypto);
-            }
-        }
-        return cryptoById;
-    }
-
-    public List<CryptoDTO> getPortfolioValue() {
-        List<CryptoDTO> portfolioValue = new ArrayList<>();
-        for (CryptoDTO crypto : cryptos) {
-            Double value = crypto.getPrice() * crypto.getQuantity();
-            crypto.setPrice(value);
-            portfolioValue.add(crypto);
+            double value = crypto.getPrice() * crypto.getQuantity();
+            portfolioValue += value;
         }
         return portfolioValue;
     }

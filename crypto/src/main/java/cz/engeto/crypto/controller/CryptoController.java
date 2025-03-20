@@ -42,26 +42,29 @@ public class CryptoController {
 
     @GetMapping("/cryptos/{id}")
     public ResponseEntity getCryptoById(@PathVariable Integer id) {
-        List<CryptoDTO> cryptos = cryptoService.getCryptoById(id);
-        return new ResponseEntity(cryptos, HttpStatus.OK);
-    }
-
-    @PutMapping("/cryptos/{id}")
-    public ResponseEntity updateCrypto(@PathVariable Integer id, @RequestBody CryptoDTO cryptoDTO) {
-        List<CryptoDTO> cryptos = cryptoService.getCryptoById(id);
-        if (cryptos.isEmpty()) {
+        CryptoDTO crypto = cryptoService.getCryptoById(id);
+        if (crypto == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        CryptoDTO crypto = cryptos.get(0);
+        return new ResponseEntity(crypto, HttpStatus.OK);
+    }
+
+    @PutMapping("/cryptos/updateCryptos/{id}")
+    public ResponseEntity updateCrypto(@PathVariable Integer id, @RequestBody CryptoDTO cryptoDTO) {
+        CryptoDTO crypto = cryptoService.getCryptoById(id);
+        if (crypto == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
         crypto.setName(cryptoDTO.getName());
         crypto.setPrice(cryptoDTO.getPrice());
         crypto.setQuantity(cryptoDTO.getQuantity());
         crypto.setSymbol(cryptoDTO.getSymbol());
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(crypto, HttpStatus.OK);
     }
 
-    @GetMapping("/portfolio-value")
-    public ResponseEntity getPortfolioValue() {
-        return new ResponseEntity(cryptoService.getPortfolioValue(), HttpStatus.OK);
+    @GetMapping("/cryptos/portfolioValue")
+    public ResponseEntity getPortfolioValue(){
+        double cryptos = cryptoService.getPortfolioValue();
+        return new ResponseEntity(cryptos, HttpStatus.OK);
     }
 }
