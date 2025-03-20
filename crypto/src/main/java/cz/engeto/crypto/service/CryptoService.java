@@ -21,17 +21,6 @@ public class CryptoService {
         return cryptos;
     }
 
-    //Další metoda, která není v zadání. Projít s Tomem, jestli existuje i jiné řešení.
-    public List<CryptoDTO> getCryptoById(Integer id) {
-        List<CryptoDTO> cryptoById = new ArrayList<>();
-        for (CryptoDTO crypto : cryptos) {
-            if (crypto.getId().equals(id)) {
-                cryptoById.add(crypto);
-            }
-        }
-        return cryptoById;
-    }
-
     public List<CryptoDTO> sortCryptosByName() {
         cryptos.sort(Comparator.comparing(CryptoDTO::getName));
         return cryptos;
@@ -45,5 +34,25 @@ public class CryptoService {
     public List<CryptoDTO> sortCryptosByQuantity() {
         cryptos.sort(Comparator.comparing(CryptoDTO::getQuantity));
         return cryptos;
+    }
+
+    public List<CryptoDTO> getCryptoById(Integer id) {
+        List<CryptoDTO> cryptoById = new ArrayList<>();
+        for (CryptoDTO crypto : cryptos) {
+            if (crypto.getId().equals(id)) {
+                cryptoById.add(crypto);
+            }
+        }
+        return cryptoById;
+    }
+
+    public List<CryptoDTO> getPortfolioValue() {
+        List<CryptoDTO> portfolioValue = new ArrayList<>();
+        for (CryptoDTO crypto : cryptos) {
+            Double value = crypto.getPrice() * crypto.getQuantity();
+            crypto.setPrice(value);
+            portfolioValue.add(crypto);
+        }
+        return portfolioValue;
     }
 }
